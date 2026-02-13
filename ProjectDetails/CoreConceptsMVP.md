@@ -28,10 +28,8 @@ Survive long enough to reach it. Stay too long and risk getting overwhelmed. Mov
 # Core Pillars
 
 1. **A Moving Base**
-2. **Roguelike Progression**
-3. **Basic Upgrades**
-4. **Escalating Night Pressure**
-5. **Resource Management & Economy**
+2. **Auto-Battler Combat**
+3. **Deterministic Waves**
 
 ---
 
@@ -40,10 +38,8 @@ Survive long enough to reach it. Stay too long and risk getting overwhelmed. Mov
 ## Day Phase (Travel + Strategy)
 
 - Caravan progresses along a fixed world path.
-- Players can:
-  - Explore off-path areas (risk/reward) 
-  - Gather resources
-  - Choose upgrades and prepare for night.
+- Players gather resources and choose upgrades.
+- Prepare for the next wave.
 
 ---
 
@@ -53,20 +49,17 @@ Survive long enough to reach it. Stay too long and risk getting overwhelmed. Mov
 - Each day/night cycle is a **wave**—Wave 1, Wave 2, Wave 3, etc.
 - Enemy waves attack from all directions as darkness falls.
 - Units fight automatically in real-time auto-battler style.
-- Players:
-  - Control caravan movement (speed up, slow down, stop)
-  - Place limited defensive structures
-  - Manage resources and upgrades during combat
+- Players manage caravan movement and upgrades during combat.
 - Survive until dawn or reach the next waypoint.
 
-**Key Tension:** Defend a moving target while managing caravan and resources.
+**Key Tension:** Defend a moving target with automatic combat.
 
 ---
 
 ## End of Path
 
-- Arena-style boss encounter.
-- Defeat boss → Progress to next biome.
+- Final wave encounter.
+- Complete path → Run ends successfully.
 - Lose → Run ends.
 
 ---
@@ -77,15 +70,10 @@ Survive long enough to reach it. Stay too long and risk getting overwhelmed. Mov
 
 The caravan is the player's base and moves continuously along a path.
 
-**Basic Caravan Components:**
-- Core caravan structure
-- Upgradeable defensive elements
-- Unit deployment positions
-
-**Upgrade System:**
-- Players can upgrade caravan components between waves
-- Upgrades improve defense, unit capacity, or special abilities
-- Simple, clear upgrade choices rather than complex reconfiguration
+**Core Mechanics:**
+- Caravan moves forward automatically
+- Players can control speed (speed up, slow down, stop)
+- Movement affects how many waves are faced
 
 ---
 
@@ -94,32 +82,20 @@ The caravan is the player's base and moves continuously along a path.
 **Real-Time Auto-Battler:**
 - Units deploy from the caravan and fight automatically
 - Players don't directly control units in combat
-- Strategic decisions happen before and during combat:
-  - When to deploy units
-  - Caravan positioning and movement
-  - Resource allocation for upgrades
-  - Defensive structure placement
+- Strategic focus: caravan movement and upgrade timing
 
-**Unit Management:**
+**Unit System:**
 - Units are acquired and upgraded between waves
-- Different unit types have different roles (melee, ranged, support)
-- Units fight automatically based on their AI and positioning
+- Units fight automatically based on their AI
 
 ---
 
-## 3. Roguelike Structure
+## 3. Deterministic Wave System
 
-Each run includes:
-- Deterministic wave compositions (Wave 1 always has the same enemies, Wave 2 always has the same enemies, etc. per biome)
-- Random relics
-- Different caravan upgrades
-- Variable biome modifiers
-
-Meta progression between runs:
-- Unlock new unit types
-- Unlock new upgrade options
-- Expand caravan capacity
-- Unlock new biomes
+**Consistent Waves:**
+- Wave 1 always has the same enemies, Wave 2 always has the same, etc.
+- Players can learn and strategize for specific waves
+- Waves escalate in difficulty
 
 ---
 
@@ -152,10 +128,10 @@ Creates constant pressure and prevents players from settling into comfortable de
 
 ## 3. Strategic Decision-Making
 
-**Multiple Priorities:**
-- Must balance: caravan movement, resource gathering, upgrade choices, defensive structure placement
-- Auto-battler combat means focus is on strategic decisions, not execution
-- Limited resources force meaningful choices about what to upgrade and when
+**Core Decisions:**
+- Caravan movement (speed affects wave count)
+- Upgrade choices (what to improve and when)
+- Resource allocation
 
 Creates strategic tension without execution overload.
 
@@ -165,80 +141,13 @@ Creates strategic tension without execution overload.
 
 ---
 
-# Strategic Systems
+# Resource Management
 
-## Exploration
-
-**Simple Risk/Reward:**
-- Explore off-path areas for resources and upgrades
-- Trade-off: More rewards vs. Less time to prepare
-- Simple decision: explore or stay on path
-
----
-
-## Resource Management & Economy
-
-**Core Concept:** Simple resource gathering and spending for upgrades.
-
-**Resource Types:**
-- **Bones** — From defeated enemies
-- **Wood** — From environment
-- **Ore** — From environment
-
-**Simple Economy:**
+**Simple System:**
 - Gather resources during day phase
 - Spend resources on upgrades between waves
-- Resources are spent, not stored with weight limits
-- Focus on meaningful upgrade choices, not inventory management
-
-**Resource Sources:**
-- Gathering from environment (wood, ore)
-- Defeating enemies (bones)
-- Exploration rewards
-
-**Key Tension:** Spend resources now for immediate power, or save for better upgrades later?
-
----
-
-# Wave System
-
-**Deterministic Waves:**
-- Each day/night cycle is a numbered wave (Wave 1, Wave 2, Wave 3, etc.)
-- Within each biome/level, waves are consistent across playthroughs
-- Wave 1 will always have the same enemy composition, Wave 2 will always have the same, etc.
-- This allows players to learn and strategize for specific waves
-
-**Enemy Escalation:**
-- Early waves: Light skirmishers
-- Mid-game waves: Siege units, flying enemies, armor types
-- Late-game waves: Elite commanders, mutated swarms, environmental hazards
-
-**Benefits of Deterministic Waves:**
-- Players can learn and master specific wave patterns
-- Strategic planning becomes more meaningful
-- Replayability comes from different builds/strategies rather than random enemy spawns
-- Skill expression through wave knowledge and preparation
-
-Bosses introduce biome-specific mechanics.
-
----
-
-# Biomes
-
-Each biome represents one "path" and culminates in a boss.
-
-Examples include:
-- Ashen Desert
-- Red Sand Expanse
-- Neon Dark Forest
-- Frozen Highlands
-- Dead Kingdom
-
-Each biome includes:
-- Unique enemy faction
-- Night modifiers
-- Environmental hazards
-- Final boss encounter
+- Resources come from defeating enemies and gathering from environment
+- Focus on meaningful upgrade choices: what to improve and when
 
 ---
 
@@ -258,25 +167,26 @@ Low-poly with dramatic night lighting and strong silhouettes.
 To avoid scope creep, MVP should focus on:
 
 **Core Systems:**
-- Day/Night Cycle with continuous movement (caravan never stops)
-- Deterministic wave system (consistent waves per biome for learnability)
+- Moving caravan (continuous movement, speed control)
+- Deterministic wave system (consistent waves for learnability)
 - Real-time auto-battler combat (units fight automatically)
-- Basic caravan upgrades (simple upgrade system, not complex reconfiguration)
-- Core enemy types that escalate through waves
-- Simple resource management (gather and spend, no weight system)
+- Basic upgrade system (spend resources to improve caravan/units)
+- Simple resource gathering (from enemies and environment)
 
 **Content:**
-- Single biome with multiple waves
-- Basic progression (upgrades, unit unlocks, caravan improvements)
+- Single path with multiple waves
+- Basic unit types
+- Basic upgrade options
 
 **Not in MVP:**
-- Multiplayer functionality
-- Boss encounters
+- Exploration mechanics
+- Multiple resource types
+- Defensive structures
+- Complex unit management
+- Meta progression
 - Multiple biomes
-- Complex caravan reconfiguration
-- Weight/capacity systems
-- Tool-based role system
-- Deep meta progression
+- Boss encounters
+- Multiplayer
 
 **Focus:** Validate the core tension loop of defending a moving base with auto-battler combat through deterministic, learnable waves.
 
@@ -291,9 +201,9 @@ To avoid scope creep, MVP should focus on:
 
 A moving base with auto-battler combat.
 
-Strategic movement + upgrade choices + resource management.
+Strategic movement + upgrade choices.
 
-Defending a moving target where combat is automatic but strategic decisions matter.
+Defending a moving target where combat is automatic but movement and upgrades matter.
 
 ---
 
@@ -326,6 +236,4 @@ A roguelike tower defense game where the base never stands still.
 You travel.  
 You upgrade.  
 You survive the night—while still moving.  
-You manage resources.  
-You face the boss.  
 You move on — or you fall.
