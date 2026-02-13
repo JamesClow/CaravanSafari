@@ -2,9 +2,27 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach to Unity",
-            "type": "vstuc",
+            "name": "Unity Editor",
+            "type": "unity",
+            "path": "${workspaceFolder}",
+            "request": "launch"
+        },
+        {
+            "name": "Windows Player",
+            "type": "unity",
+            "path": "${workspaceFolder}",
+            "request": "launch",
+            "preLaunchTask": "build"
+        },
+        {
+            "name": "Attach to Unity Editor",
+            "type": "unity",
+            "request": "attach"
+        },
+        {
+            "name": "Attach to Unity Player",
+            "type": "unity",
             "request": "attach"
         }
-     ]
+    ]
 }

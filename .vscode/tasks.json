@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "echo",
+            "type": "shell",
+            "args": [
+                "Unity build task - Configure this to run your Unity build command"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "regenerate-project-files",
+            "command": "echo",
+            "type": "shell",
+            "args": [
+                "Use Unity Editor: Assets > Open C# Project to regenerate .csproj files"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,4 +1,44 @@
 {
+    // Unity Project Solution
+    "dotnet.defaultSolution": "CaravanSafari.slnx",
+
+    // C# Language Server Configuration
+    "omnisharp.useModernNet": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableImportCompletion": true,
+    "omnisharp.organizeImportsOnFormat": true,
+
+    // C# Formatting
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.rulers": [120]
+    },
+
+    // IntelliSense and Code Completion
+    "editor.suggestSelection": "first",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    },
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.acceptSuggestionOnCommitCharacter": true,
+    "editor.acceptSuggestionOnEnter": "on",
+
+    // Unity-specific file associations
+    "files.associations": {
+        "*.compute": "hlsl",
+        "*.cginc": "hlsl",
+        "*.shader": "hlsl"
+    },
+
+    // File exclusions (Unity build artifacts and generated files)
     "files.exclude": {
         "**/.DS_Store": true,
         "**/.git": true,
@@ -51,5 +91,27 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "CaravanSafari.slnx"
+
+    // Search exclusions (improve search performance)
+    "search.exclude": {
+        "**/Library": true,
+        "**/Temp": true,
+        "**/obj": true,
+        "**/Logs": true,
+        "**/UserSettings": true
+    },
+
+    // File watcher exclusions (improve performance)
+    "files.watcherExclude": {
+        "**/Library/**": true,
+        "**/Temp/**": true,
+        "**/obj/**": true,
+        "**/Logs/**": true,
+        "**/.git/**": true
+    },
+
+    // Unity-specific settings
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
 }
