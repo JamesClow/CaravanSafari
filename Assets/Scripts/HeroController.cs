@@ -14,6 +14,11 @@ public class HeroController : MonoBehaviour
     public float gravity = 20f;
     public float groundedPullDown = 2f;
 
+    [Header("Rotation")]
+    [Tooltip("Optional: assign the visual model here; only this will rotate to face movement direction.")]
+    public GameObject model;
+    public float rotationSpeed = 10f;  // How quickly the model pivots to face movement direction
+
     [Header("Input Settings")]
     public KeyCode callKey = KeyCode.Space;
 
@@ -26,7 +31,6 @@ public class HeroController : MonoBehaviour
     private CharacterController characterController;
     private Vector3 horizontalVelocity; // XZ movement only
     private float verticalVelocity;     // Gravity only
-    private Quaternion lockedRotation;
 
     void Start()
     {
@@ -39,9 +43,6 @@ public class HeroController : MonoBehaviour
             characterController.radius = 0.5f;
             characterController.center = new Vector3(0, 1, 0);
         }
-
-        // Lock initial rotation
-        lockedRotation = transform.rotation;
 
         // Disable conflicting components
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -63,15 +64,6 @@ public class HeroController : MonoBehaviour
     {
         HandleMovement();
         HandleCallInput();
-    }
-
-    void LateUpdate()
-    {
-        // Enforce locked rotation
-        if (transform.rotation != lockedRotation)
-        {
-            transform.rotation = lockedRotation;
-        }
     }
 
     void HandleMovement()
@@ -127,7 +119,19 @@ public class HeroController : MonoBehaviour
             verticalVelocity -= gravity * Time.deltaTime;
         }
 
-        // --- 5. APPLY MOVEMENT ---
+        // --- 5. PIVOT MODEL TO FACE MOVEMENT DIRECTION ---
+        if (model != null && horizontalVelocity.magnitude > 0.1f)
+        {
+            Vector3 lookDirection = horizontalVelocity.normalized;
+            lookDirection.y = 0f;
+            if (lookDirection.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                model.transform.rotation = Quaternion.Slerp(model.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+        }
+
+        // --- 6. APPLY MOVEMENT ---
         Vector3 finalVelocity = new Vector3(
             horizontalVelocity.x,
             verticalVelocity,

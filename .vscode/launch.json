@@ -23,6 +23,11 @@
             "name": "Attach to Unity Player",
             "type": "unity",
             "request": "attach"
+        },
+        {
+            "name": "Attach to Unity",
+            "type": "vstuc",
+            "request": "attach"
         }
     ]
 }

@@ -1,37 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class Launcher : MonoBehaviour
 {
   public GameObject projectilePrefab;
   public Targeting targeting;
-  public float launchInterval = 3f; // Time between launches
-  private float nextLaunchTime = 0;
+  public float launchInterval = 3f;
+  [Tooltip("Distance in front of the tower to spawn the projectile (avoids spawning inside tower collider).")]
+  public float spawnOffset = 0.5f;
+  private float nextLaunchTime = 0f;
 
   void Start()
   {
-    nextLaunchTime = Time.time + launchInterval; // Set the initial launch time
+    // Auto-find sibling components if not assigned
+    if (targeting == null)
+      targeting = GetComponent<Targeting>();
+    if (targeting == null)
+      targeting = GetComponentInChildren<Targeting>();
+
+    nextLaunchTime = Time.time + launchInterval;
   }
 
   void Update()
   {
-    // Check if it's time to launch another projectile
     if (Time.time >= nextLaunchTime)
     {
-      launchProjectile();
-      nextLaunchTime = Time.time + launchInterval; // Reset the launch time
+      LaunchProjectile();
+      nextLaunchTime = Time.time + launchInterval;
     }
   }
 
-  void launchProjectile()
+  void LaunchProjectile()
   {
-    if (projectilePrefab != null && targeting.target != null)
+    if (projectilePrefab != null && targeting != null && targeting.target != null)
     {
-      // Instantiate the projectile at this object's position and rotation
-      GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
-      projectile.GetComponent<Projectile>().target = targeting.target;
+      // Spawn slightly in front of the tower toward the target so we don't spawn inside the tower collider
+      Vector3 toTarget = targeting.target.transform.position - transform.position;
+      float dist = toTarget.magnitude;
+      Vector3 spawnPos = dist > 0.01f
+        ? transform.position + (toTarget / dist) * Mathf.Min(spawnOffset, dist * 0.5f)
+        : transform.position + Vector3.forward * spawnOffset;
+
+      GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+      Projectile proj = projectile.GetComponent<Projectile>();
+      if (proj != null)
+      {
+        proj.target = targeting.target;
+      }
     }
   }
 }
