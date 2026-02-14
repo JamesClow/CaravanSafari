@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
     public bool showHealthBar = true;
 
     [Tooltip("Offset above the entity (in world units)")]
-    public Vector3 healthBarOffset = new Vector3(0, 2f, 0);
+    public Vector3 healthBarOffset = new Vector3(0, 0.5f, 0);
 
     [Tooltip("Size of the health bar (width x height) - shared by all health bars")]
     public static Vector2 healthBarSize = new Vector2(1f, 0.15f);
