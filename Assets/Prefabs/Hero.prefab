@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5708812851126570462}
+  - component: {fileID: 4418161522862674027}
   m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
@@ -34,6 +35,21 @@ Transform:
   - {fileID: 114309316351821211}
   m_Father: {fileID: 8091700191651696738}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4418161522862674027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119266230577808462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6221b350f5c758b4385efc3e2bd47d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlowBob
+  amplitude: 0.02
+  frequency: 2
+  direction: {x: 0, y: 1, z: 0}
 --- !u!1 &7656827750833773105
 GameObject:
   m_ObjectHideFlags: 0
