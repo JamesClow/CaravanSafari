@@ -1,9 +1,16 @@
 {
   "dependencies": {
+    "com.unity.2d.enhancers": "1.0.0",
+    "com.unity.ai.assistant": "1.6.0-pre.3",
+    "com.unity.ai.generators": "1.6.0-pre.3",
+    "com.unity.ai.inference": "2.5.0",
     "com.unity.ai.navigation": "2.0.10",
     "com.unity.collab-proxy": "2.11.3",
     "com.unity.feature.development": "1.0.2",
     "com.unity.multiplayer.center": "1.0.1",
+    "com.unity.probuilder": "6.0.9",
+    "com.unity.render-pipelines.universal": "17.3.0",
+    "com.unity.splines": "2.8.3",
     "com.unity.timeline": "1.8.10",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.9.9",

@@ -11,7 +11,7 @@ using UnityEngine;
 /// 1. Add this to a GameObject in your scene.
 /// 2. Define waves in the inspector (each wave has spawn groups).
 /// 3. Create spawn point Transforms in the scene and assign them.
-/// 4. Ensure enemy prefabs have: NavMeshAgent, Health, Enemy, Collider (IsTrigger), Tag="Enemy".
+/// 4. Ensure enemy prefabs have: NavMeshAgent, Health, UnitAI, OffensiveTargeting, Attack, Collider (IsTrigger), Tag="Enemy".
 /// 5. Ensure a NavMesh is baked in the scene.
 /// </summary>
 public class WaveManager : MonoBehaviour

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Projectile
+  - Hero
+  - Tower
+  - HomeBase
   layers:
   - Default
   - TransparentFX
