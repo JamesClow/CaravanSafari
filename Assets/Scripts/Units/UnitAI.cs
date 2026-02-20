@@ -35,6 +35,7 @@ public class UnitAI : MonoBehaviour
     private NavMeshAgent _agent;
     private Rigidbody _rb;
     private Health _health;
+    private CaravanFollower _caravanFollower;
     private float _knockbackEndTime = -1f;
 
     private enum State { Advance, Engage, Retreat }
@@ -58,8 +59,11 @@ public class UnitAI : MonoBehaviour
         }
 
         _advanceTarget = GetAdvanceTargetTransform();
+        _caravanFollower = GetComponent<CaravanFollower>();
         _nextDestinationUpdateTime = Time.time + destinationUpdateInterval;
         _state = State.Advance;
+        if (_caravanFollower != null)
+            _caravanFollower.Resume();
 
         if (_health != null)
         {
@@ -156,15 +160,18 @@ public class UnitAI : MonoBehaviour
             float dist = Vector3.Distance(transform.position, offensiveTargeting.target.transform.position);
             if (dist <= engageRadius)
             {
+                if (_caravanFollower != null) _caravanFollower.Pause();
                 _state = State.Engage;
                 _nextDestinationUpdateTime = Time.time;
                 return;
             }
         }
 
+        if (_caravanFollower != null && _caravanFollower.IsActive)
+            return;
+
         if (doRepath && _agent.isActiveAndEnabled)
         {
-            // When we have a valid offensive target, advance toward it instead of the core
             Transform moveTarget = (offensiveTargeting != null && offensiveTargeting.target != null && offensiveTargeting.target.activeInHierarchy)
                 ? offensiveTargeting.target.transform
                 : null;
@@ -186,21 +193,36 @@ public class UnitAI : MonoBehaviour
         if (offensiveTargeting == null || offensiveTargeting.target == null || !offensiveTargeting.target.activeInHierarchy)
         {
             if (offensiveTargeting != null) offensiveTargeting.target = null;
+            if (_caravanFollower != null) _caravanFollower.Resume();
             _state = State.Advance;
             return;
         }
 
         if (_health != null && retreatHealthThreshold > 0f && _health.GetHealthPercent() <= retreatHealthThreshold)
         {
+            if (_caravanFollower != null) _caravanFollower.Pause();
             _state = State.Retreat;
             _retreatEndTime = Time.time + retreatDuration;
             return;
+        }
+
+        if (_caravanFollower != null)
+        {
+            float distFromSlot = Vector3.Distance(transform.position, _caravanFollower.GetSlotWorldPosition());
+            if (distFromSlot > leashDistance)
+            {
+                offensiveTargeting.target = null;
+                _caravanFollower.Resume();
+                _state = State.Advance;
+                return;
+            }
         }
 
         float distToTarget = Vector3.Distance(transform.position, offensiveTargeting.target.transform.position);
         if (distToTarget > leashDistance)
         {
             offensiveTargeting.target = null;
+            if (_caravanFollower != null) _caravanFollower.Resume();
             _state = State.Advance;
             return;
         }
@@ -216,6 +238,7 @@ public class UnitAI : MonoBehaviour
     {
         if (Time.time >= _retreatEndTime)
         {
+            if (_caravanFollower != null) _caravanFollower.Resume();
             _state = State.Advance;
             _advanceTarget = GetAdvanceTargetTransform();
             return;

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1918335686325249489}
   - component: {fileID: 1320387600184435636}
   - component: {fileID: 1898938987717066721}
+  - component: {fileID: 6607692837462069978}
+  - component: {fileID: 3451694883264024150}
   m_Layer: 6
   m_Name: Ballista
   m_TagString: Tower
@@ -59,7 +61,7 @@ MonoBehaviour:
   healthMax: 100
   healthCurrent: 100
   showHealthBar: 1
-  healthBarOffset: {x: 0, y: 0.5, z: 0}
+  healthBarOffset: {x: 0, y: 1, z: 0}
   alwaysVisible: 1
   hideAtFullHealth: 0
   fullHealthColor: {r: 0, g: 1, b: 0, a: 1}
@@ -88,6 +90,43 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.93, y: 0.71, z: 1.2}
   m_Center: {x: 0, y: 0.33, z: 0}
+--- !u!195 &6607692837462069978
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3288367332693720849}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 0.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &3451694883264024150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3288367332693720849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8246404676186c749944d57353515146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CaravanFollower
+  formationManager: {fileID: 0}
+  caravanCore: {fileID: 0}
+  destinationUpdateInterval: 0.25
 --- !u!1 &3888905836921851820
 GameObject:
   m_ObjectHideFlags: 0

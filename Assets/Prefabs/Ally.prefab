@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8205437160952644510}
   - component: {fileID: 1405470150427311979}
   - component: {fileID: 5483995662573575649}
+  - component: {fileID: 5334540597484003586}
   m_Layer: 6
   m_Name: Ally
   m_TagString: Tower
@@ -143,7 +144,6 @@ MonoBehaviour:
   lowHealthThreshold: 0.3
   deathReplacementPrefab: {fileID: 897427007977346569, guid: 40e44153b650ccb45ac46bf50d5c0282, type: 3}
   damageFlashDuration: 0.15
-  damageFlashMaterial: {fileID: 2100000, guid: 6ffd130c965308f42a9045f46c310e5a, type: 2}
 --- !u!114 &8205437160952644510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +203,25 @@ MonoBehaviour:
   attacksPerSecond: 1
   attackRange: 2
   offensiveTargeting: {fileID: 1405470150427311979}
+--- !u!114 &5334540597484003586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885277800803042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8246404676186c749944d57353515146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CaravanFollower
+  formationManager: {fileID: 0}
+  caravanCore: {fileID: 0}
+  catchUpMultiplier: 1.5
+  slowDownMultiplier: 0.5
+  catchUpDistance: 4
+  aheadDistance: 4
+  destinationUpdateInterval: 0.25
 --- !u!1 &3545339801187065615
 GameObject:
   m_ObjectHideFlags: 0
