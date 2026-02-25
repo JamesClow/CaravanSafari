@@ -11,6 +11,15 @@ public class Launcher : MonoBehaviour
   public float launchInterval = 3f;
   [Tooltip("Distance in front of the tower to spawn the projectile (avoids spawning inside tower collider).")]
   public float spawnOffset = 0.5f;
+
+  [Header("Attack animation")]
+  [Tooltip("Animator to trigger the attack animation. Uses same GameObject if not set.")]
+  public Animator animator;
+  [Tooltip("Trigger parameter set when starting an attack; projectile fires after attackDelay.")]
+  public string attackTriggerName = "attack";
+  [Tooltip("Delay (seconds) after triggering the attack animation before the projectile is actually fired.")]
+  public float attackDelay = 1f;
+
   private float nextLaunchTime = 0f;
 
   void Start()
@@ -19,17 +28,29 @@ public class Launcher : MonoBehaviour
       offensiveTargeting = GetComponent<OffensiveTargeting>();
     if (offensiveTargeting == null)
       offensiveTargeting = GetComponentInChildren<OffensiveTargeting>();
+    if (animator == null)
+      animator = GetComponent<Animator>();
 
     nextLaunchTime = Time.time + launchInterval;
   }
 
   void Update()
   {
-    if (Time.time >= nextLaunchTime)
-    {
-      LaunchProjectile();
-      nextLaunchTime = Time.time + launchInterval;
-    }
+    if (Time.time < nextLaunchTime) return;
+    if (projectilePrefab == null || offensiveTargeting == null || offensiveTargeting.target == null) return;
+
+    nextLaunchTime = Time.time + launchInterval;
+
+    if (animator != null && !string.IsNullOrEmpty(attackTriggerName))
+      animator.SetTrigger(attackTriggerName);
+
+    StartCoroutine(DelayedLaunch(attackDelay));
+  }
+
+  IEnumerator DelayedLaunch(float delay)
+  {
+    yield return new WaitForSeconds(delay);
+    LaunchProjectile();
   }
 
   void LaunchProjectile()

@@ -11,6 +11,10 @@ public class Projectile : MonoBehaviour
   public float speed = 15f;           // Units per second (frame-rate independent)
   public float maxLifetime = 5f;      // Auto-destroy after this many seconds
 
+  [Tooltip("Peak arc height as a fraction of distance to target (0 = no arc). e.g. 0.2 = 20% of distance.")]
+  [Range(0f, 1f)]
+  public float arcHeightFactor = 0f;
+
   [HideInInspector]
   public GameObject target;
 
@@ -21,10 +25,19 @@ public class Projectile : MonoBehaviour
   public GameObject source;
 
   private float spawnTime;
+  private Vector3 origin;
+  private float totalDistance;
+  private float progress;
 
   void Start()
   {
     spawnTime = Time.time;
+    origin = transform.position;
+    if (target != null && target.activeInHierarchy)
+      totalDistance = Vector3.Distance(origin, target.transform.position);
+    else
+      totalDistance = 1f;
+    progress = 0f;
   }
 
   void Update()
@@ -38,12 +51,35 @@ public class Projectile : MonoBehaviour
 
     if (target != null && target.activeInHierarchy)
     {
-      // Move toward target (frame-rate independent)
-      transform.position = Vector3.MoveTowards(
-          transform.position,
-          target.transform.position,
-          speed * Time.deltaTime
-      );
+      Vector3 targetPos = target.transform.position;
+
+      if (arcHeightFactor > 0f && totalDistance > 0.001f)
+      {
+        // Move along straight line from origin to target so we land exactly at target height
+        float distToTarget = Vector3.Distance(origin, targetPos);
+        if (distToTarget > 0.001f)
+          progress += (speed * Time.deltaTime) / distToTarget;
+
+        if (progress >= 1f)
+        {
+          transform.position = targetPos;
+        }
+        else
+        {
+          float t = Mathf.Clamp01(progress);
+          Vector3 linearPos = Vector3.Lerp(origin, targetPos, t);
+          float arcOffset = (arcHeightFactor * totalDistance) * 4f * t * (1f - t);
+          transform.position = linearPos + Vector3.up * arcOffset;
+        }
+      }
+      else
+      {
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            targetPos,
+            speed * Time.deltaTime
+        );
+      }
     }
     else
     {
