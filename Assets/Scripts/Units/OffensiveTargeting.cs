@@ -63,8 +63,8 @@ public class OffensiveTargeting : MonoBehaviour
         {
             if (defaultTargetTag == "HomeBase")
             {
-                HomeBase hb = HomeBase.getInstance();
-                _resolvedDefault = hb != null ? hb.transform : null;
+                CaravanCore core = CaravanCore.getInstance();
+                _resolvedDefault = core != null ? core.transform : null;
             }
             else
             {

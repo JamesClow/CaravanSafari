@@ -24,20 +24,29 @@ public class Projectile : MonoBehaviour
   [HideInInspector]
   public GameObject source;
 
+  [Tooltip("Smoothing time for following target movement (avoids vertical dips/spikes when target height changes).")]
+  public float targetSmoothTime = 0.15f;
+
   private float spawnTime;
   private Vector3 origin;
   private float totalDistance;
   private float progress;
+  private Vector3 smoothedTargetPosition;
+  private Vector3 targetSmoothVelocity;
 
   void Start()
   {
     spawnTime = Time.time;
     origin = transform.position;
     if (target != null && target.activeInHierarchy)
-      totalDistance = Vector3.Distance(origin, target.transform.position);
+    {
+      smoothedTargetPosition = target.transform.position;
+      totalDistance = Vector3.Distance(origin, smoothedTargetPosition);
+    }
     else
       totalDistance = 1f;
     progress = 0f;
+    targetSmoothVelocity = Vector3.zero;
   }
 
   void Update()
@@ -51,23 +60,30 @@ public class Projectile : MonoBehaviour
 
     if (target != null && target.activeInHierarchy)
     {
-      Vector3 targetPos = target.transform.position;
+      // Smooth follow so target height changes don't cause vertical dips/spikes
+      float smoothTime = Mathf.Max(0.001f, targetSmoothTime);
+      smoothedTargetPosition = Vector3.SmoothDamp(
+        smoothedTargetPosition,
+        target.transform.position,
+        ref targetSmoothVelocity,
+        smoothTime
+      );
 
       if (arcHeightFactor > 0f && totalDistance > 0.001f)
       {
-        // Move along straight line from origin to target so we land exactly at target height
-        float distToTarget = Vector3.Distance(origin, targetPos);
+        // Move along straight line from origin to smoothed target so we land exactly at target height
+        float distToTarget = Vector3.Distance(origin, smoothedTargetPosition);
         if (distToTarget > 0.001f)
           progress += (speed * Time.deltaTime) / distToTarget;
 
         if (progress >= 1f)
         {
-          transform.position = targetPos;
+          transform.position = smoothedTargetPosition;
         }
         else
         {
           float t = Mathf.Clamp01(progress);
-          Vector3 linearPos = Vector3.Lerp(origin, targetPos, t);
+          Vector3 linearPos = Vector3.Lerp(origin, smoothedTargetPosition, t);
           float arcOffset = (arcHeightFactor * totalDistance) * 4f * t * (1f - t);
           transform.position = linearPos + Vector3.up * arcOffset;
         }
@@ -76,7 +92,7 @@ public class Projectile : MonoBehaviour
       {
         transform.position = Vector3.MoveTowards(
             transform.position,
-            targetPos,
+            smoothedTargetPosition,
             speed * Time.deltaTime
         );
       }

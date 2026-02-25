@@ -149,22 +149,19 @@ public class UnitAI : MonoBehaviour
             Transform def = offensiveTargeting.GetDefaultTarget();
             if (def != null) return def;
         }
-        HomeBase hb = HomeBase.getInstance();
-        return hb != null ? hb.transform : null;
+        CaravanCore core = CaravanCore.getInstance();
+        return core != null ? core.transform : null;
     }
 
     private void UpdateAdvance(bool doRepath)
     {
-        if (offensiveTargeting != null && offensiveTargeting.target != null)
+        // Have a valid target: break formation and engage (move toward / attack) — don't wait until target is within engageRadius
+        if (offensiveTargeting != null && offensiveTargeting.target != null && offensiveTargeting.target.activeInHierarchy)
         {
-            float dist = Vector3.Distance(transform.position, offensiveTargeting.target.transform.position);
-            if (dist <= engageRadius)
-            {
-                if (_caravanFollower != null) _caravanFollower.Pause();
-                _state = State.Engage;
-                _nextDestinationUpdateTime = Time.time;
-                return;
-            }
+            if (_caravanFollower != null) _caravanFollower.Pause();
+            _state = State.Engage;
+            _nextDestinationUpdateTime = Time.time;
+            return;
         }
 
         if (_caravanFollower != null && _caravanFollower.IsActive)
@@ -190,6 +187,7 @@ public class UnitAI : MonoBehaviour
 
     private void UpdateEngage(bool doRepath)
     {
+        // No valid target: clear and return to caravan formation
         if (offensiveTargeting == null || offensiveTargeting.target == null || !offensiveTargeting.target.activeInHierarchy)
         {
             if (offensiveTargeting != null) offensiveTargeting.target = null;
@@ -206,6 +204,7 @@ public class UnitAI : MonoBehaviour
             return;
         }
 
+        // Leash: too far from caravan slot — drop target and return to formation
         if (_caravanFollower != null)
         {
             float distFromSlot = Vector3.Distance(transform.position, _caravanFollower.GetSlotWorldPosition());
@@ -218,6 +217,7 @@ public class UnitAI : MonoBehaviour
             }
         }
 
+        // Leash: target too far — drop target and return to caravan
         float distToTarget = Vector3.Distance(transform.position, offensiveTargeting.target.transform.position);
         if (distToTarget > leashDistance)
         {
